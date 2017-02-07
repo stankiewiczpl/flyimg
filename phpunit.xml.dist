@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="true"
+         stopOnFailure="false"
+         syntaxCheck="true"
+>
+    <testsuites>
+        <testsuite name="Fly-image Test Suite">
+            <directory>./src/Core/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix="Test.php">./src/Core/Tests</directory>
+        </whitelist>
+    </filter>
+</phpunit>
