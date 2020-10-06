@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    image: flyimg
+    build:
+      context: .
+    container_name: flyimg
+    expose:
+      - 80
