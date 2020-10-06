@@ -65,7 +65,7 @@ class OptionsBag
     public function hashedOptionsAsString(string $imageUrl): string
     {
         // to ignore extra image parameters
-        $parsedImageUrl = preg_replace('/\\?.*/', '', $imageUrl);
+        $parsedImageUrl = $imageUrl;
 
         // Remove rf from the generated image
         $keys = $this->asArray();
@@ -85,9 +85,7 @@ class OptionsBag
      */
     public function hashOriginalImageUrl(string $imageUrl): string
     {
-        $parsedImageUrl = preg_replace('/\\?.*/', '', $imageUrl);
-
-        return TMP_DIR.'original-'.md5($parsedImageUrl);
+        return TMP_DIR.'original-'.md5($imageUrl);
     }
 
     /**

@@ -80,18 +80,19 @@ class ImageHandler
     /**
      * @param string $options
      * @param string $imageSrc
+     * @param array $queryParams
      *
      * @return OutputImage
      * @throws \Exception
      */
-    public function processImage(string $options, string $imageSrc): OutputImage
+    public function processImage(string $options, string $imageSrc, array $queryParams = []): OutputImage
     {
         [$options, $imageSrc] = $this->securityHandler->checkSecurityHash($options, $imageSrc);
         $this->securityHandler->checkRestrictedDomains($imageSrc);
 
 
         $optionsBag = new OptionsBag($this->appParameters, $options);
-        $inputImage = new InputImage($optionsBag, $imageSrc);
+        $inputImage = new InputImage($optionsBag, $imageSrc, $queryParams);
         $outputImage = new OutputImage($inputImage);
 
         try {
@@ -146,7 +147,7 @@ class ImageHandler
         }
 
         $outputImage = $this->imageProcessor()->processNewImage($outputImage);
-        
+
         //Check Face Detection options
         $this->faceDetectionProcess($outputImage);
 

@@ -39,13 +39,15 @@ class InputImage
      *
      * @param OptionsBag $optionsBag
      * @param string     $sourceImageUrl
+     * @param array $queryParams
      *
      * @throws \Exception
      */
-    public function __construct(OptionsBag $optionsBag, string $sourceImageUrl)
+    public function __construct(OptionsBag $optionsBag, string $sourceImageUrl, array $queryParams = [])
     {
+        $query = count($queryParams) ? '?'.http_build_query($queryParams) : '';
         $this->optionsBag = $optionsBag;
-        $this->sourceImageUrl = $sourceImageUrl;
+        $this->sourceImageUrl = $sourceImageUrl . $query;
 
         $this->sourceImagePath = $optionsBag->hashOriginalImageUrl($this->sourceImageUrl);
         $this->saveToTemporaryFile();

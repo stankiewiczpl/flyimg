@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use Core\Entity\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends CoreController
 {
@@ -15,15 +16,17 @@ class DefaultController extends CoreController
     }
 
     /**
+     * @param Request $request
      * @param string $options
-     * @param string $imageSrc
+     * @param string|null $imageSrc
      *
      * @return Response
      * @throws \Exception
      */
-    public function uploadAction(string $options, string $imageSrc = null): Response
+    public function uploadAction(Request $request,string $options, string $imageSrc = null): Response
     {
-        $image = $this->imageHandler()->processImage($options, $imageSrc);
+        $queryParams = $request->query->all();
+        $image = $this->imageHandler()->processImage($options, $imageSrc, $queryParams);
 
         $this->response->generateImageResponse($image);
 
