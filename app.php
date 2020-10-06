@@ -6,13 +6,17 @@ use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\Routing\RouteCollection;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $app = new Silex\Application();
 
 /** @var \Core\Entity\AppParameters $app['params'] */
 $app['params'] = new \Core\Entity\AppParameters(__DIR__.'/config/parameters.yml');
 
 
-$app['env'] = $_ENV['env'] ?: 'dev';
+$app['env'] = $_ENV['APP_ENV'] ?: 'dev';
+
 $exceptionHandlerFunction = function (\Exception $e) {
     $out = fopen('php://stdout', 'w');
     fputs(
@@ -103,6 +107,6 @@ if (!empty($argv[1]) && !empty($argv[2]) && $argv[1] == 'encrypt') {
 }
 
 /** debug conf */
-$app['debug'] = $app['params']->parameterByKey('debug');
+$app['debug'] = $_ENV['APP_DEBUG'] == 'true';
 
 return $app;
